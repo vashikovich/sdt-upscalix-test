@@ -5,8 +5,8 @@ import { EMAIL_TEMPLATE, QUEUE } from '@constants';
 import { EmailService } from '@modules/utility/email/email.service';
 
 @Processor(QUEUE.BIRTHDAY_CRM)
-export class BirthdayMessageConsumer extends WorkerHost {
-  private readonly logger = new Logger(BirthdayMessageConsumer.name);
+export class BirthdayConsumer extends WorkerHost {
+  private readonly logger = new Logger(BirthdayConsumer.name);
 
   constructor(private readonly emailService: EmailService) {
     super();
