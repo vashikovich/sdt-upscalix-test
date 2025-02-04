@@ -16,7 +16,7 @@ import { UserUpdatedEvent } from './events/user-updated.event';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -74,7 +74,7 @@ export class UserService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
-    await this.userRepository.softDelete(user);
+    await this.userRepository.softDelete(user.id);
 
     this.eventEmitter.emit(EVENT.USER_DELETED, new UserDeletedEvent(id));
   }

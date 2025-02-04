@@ -1,6 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import configs from '@configs';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 const configService = new ConfigService(configs());
 
@@ -16,6 +17,7 @@ const options = {
   logging: configService.get('app.nodeEnv') !== 'production',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+  namingStrategy: new SnakeNamingStrategy(),
   autoLoadEntities: true,
 } as DataSourceOptions;
 
