@@ -1,5 +1,5 @@
 import { ISendMailOptions } from '@nestjs-modules/mailer';
-import { Processor } from '@nestjs/bullmq';
+import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
 import { Logger } from '@nestjs/common';
 import { QUEUE } from '@constants';
@@ -10,8 +10,10 @@ import { readFileSync } from 'fs';
 import { compile } from 'handlebars';
 
 @Processor(QUEUE.EMAIL)
-export class EmailConsumer {
-  constructor(private configService: ConfigService) {}
+export class EmailConsumer extends WorkerHost {
+  constructor(private configService: ConfigService) {
+    super();
+  }
 
   private logger = new Logger(EmailConsumer.name);
 

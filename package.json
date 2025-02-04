@@ -18,15 +18,15 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d ./src/database/data-source.ts",
-    "db:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs db:create -d ./src/database/data-source.ts",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d ./src/@database/data-source.ts",
+    "db:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs db:create -d ./src/@database/data-source.ts",
     "db:drop": "yarn typeorm schema:drop",
-    "db:generate": "yarn typeorm migration:generate src/database/migrations/migrations",
+    "db:generate": "yarn typeorm migration:generate src/@database/migrations/migrations",
     "db:run": "yarn typeorm migration:run",
     "db:rollback": "yarn typeorm migration:revert",
     "db:create:run": "yarn db:create && yarn db:run",
     "db:seed": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./src/database/data-source.ts",
-    "db:init": "yarn db:create && yarn db:generate && yarn db:run",
+    "db:init": "yarn db:create && yarn db:generate && yarn db:run"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
@@ -77,6 +77,7 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "typeorm-extension": "^3.6.3",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },
