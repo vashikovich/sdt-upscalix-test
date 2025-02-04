@@ -7,8 +7,8 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-// dayjs.extend(utc);
-// dayjs.extend(timezone);
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export function IsTimezone(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
@@ -21,7 +21,7 @@ export function IsTimezone(validationOptions?: ValidationOptions) {
         validate(value: any) {
           if (typeof value !== 'string') return false;
           try {
-            return !!dayjs.tz(value);
+            return !!dayjs().tz(value);
           } catch {
             return false;
           }
