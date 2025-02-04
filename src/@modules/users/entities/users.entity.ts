@@ -45,4 +45,8 @@ export class User {
 
   @DeleteDateColumn()
   deletedAt?: Date;
+
+  public get fullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
 }

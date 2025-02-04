@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/users.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { SALT_ROUNDS } from '@constants';
+import { EVENT, SALT_ROUNDS } from '@constants';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { UserDeletedEvent } from './events/user-deleted.event';
 import { UserCreatedEvent } from './events/user-created.event';
@@ -40,7 +40,7 @@ export class UserService {
     const savedUser = await this.userRepository.save(user);
 
     this.eventEmitter.emit(
-      'user.updated',
+      EVENT.USER_CREATED,
       new UserCreatedEvent(savedUser.id, savedUser),
     );
 
@@ -60,9 +60,8 @@ export class UserService {
 
     const savedUser = await this.userRepository.save(updatedUser);
 
-    // Emit event for updated user
     this.eventEmitter.emit(
-      'user.updated',
+      EVENT.USER_UPDATED,
       new UserUpdatedEvent(id, oldUser, savedUser),
     );
 
@@ -77,8 +76,7 @@ export class UserService {
 
     await this.userRepository.softDelete(user);
 
-    // Emit event for deleted user
-    this.eventEmitter.emit('user.deleted', new UserDeletedEvent(id, user));
+    this.eventEmitter.emit(EVENT.USER_DELETED, new UserDeletedEvent(id));
   }
 
   async hashPassword(password: string): Promise<string> {

@@ -6,20 +6,23 @@ import { Queue } from 'bullmq';
 
 @Injectable()
 export class EmailService {
-  constructor(@InjectQueue(QUEUE.EMAIL) private readonly mailQueue: Queue) {}
+  constructor(
+    @InjectQueue(QUEUE.EMAIL)
+    private readonly emailQueue: Queue,
+  ) {}
 
   private logger = new Logger(EmailService.name);
 
-  async sendMail(options: ISendMailOptions) {
+  async sendEmail(options: ISendMailOptions) {
     try {
       if (process.env.NODE_ENV === 'test') {
         return true;
       }
 
-      await this.mailQueue.add(JOB.SEND_EMAIL, options);
+      await this.emailQueue.add(JOB.SEND_EMAIL, options);
       return true;
     } catch (e) {
-      this.logger.error('An error occur while adding send mail job', e);
+      this.logger.error('An error occured while adding send mail job', e);
       return false;
     }
   }

@@ -4,9 +4,11 @@ import {
   ValidationArguments,
 } from 'class-validator';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-dayjs.extend(timezone);
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
 
 export function IsTimezone(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
@@ -16,7 +18,7 @@ export function IsTimezone(validationOptions?: ValidationOptions) {
       propertyName: propertyName,
       options: validationOptions,
       validator: {
-        validate(value: any, args: ValidationArguments) {
+        validate(value: any) {
           if (typeof value !== 'string') return false;
           try {
             return !!dayjs.tz(value);
